@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <!-- 开发 -->
+    <springProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+        <logger name="com.css" level="DEBUG"/>
+    </springProfile>
+
+    <!-- 测试环境 -->
+    <springProfile name="test">
+        <logger name="com.css" level="DEBUG"/>
+    </springProfile>
+
+    <!-- 生产环境 -->
+    <springProfile name="prod">
+        <logger name="org.springframework.web" level="ERROR"/>
+        <logger name="org.springboot.sample" level="ERROR"/>
+        <logger name="com.css" level="ERROR"/>
+    </springProfile>
+
+</configuration>
