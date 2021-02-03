@@ -64,17 +64,8 @@ public final class IndexFrame extends JFrame {
 
         add(BorderLayout.SOUTH, logoutButton);
 
-        /*列表数据*/
-        String[] tableHead = {"标题", "类型", "内容"};
-        String[][] tableData = {{"测试", "系统消息", "中午吃什么"}, {"待办提醒", "系统", "请办理"}, {"发发发", "哈哈哈", "cccc"}};
-        JTable jTable = new JTable(tableData, tableHead);
 
-        jTable.setEnabled(false);
-        //设置列宽自动调整策略
-        jTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        //开启自动创建排序器
-        jTable.setAutoCreateRowSorter(true);
-        //创建滚动panel容器
+        JTable jTable = new JTable();
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jScrollPane.setBounds(10, 40, 580, 500);
         add(BorderLayout.CENTER, jScrollPane);

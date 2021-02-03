@@ -5,6 +5,7 @@ import com.css.tzi.imsggui.gui.util.ImageLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,6 +19,9 @@ import java.awt.event.MouseEvent;
 @Slf4j
 @Component
 public class MsgTrayIcon {
+
+    private TrayIcon trayIcon;
+
     /**
      * 构造系统托盘图标
      *
@@ -45,7 +49,7 @@ public class MsgTrayIcon {
                 System.exit(0);
             });
             // 创建系统托盘
-            TrayIcon trayIcon = new TrayIcon(image, "消息提醒系统", popupMenu);
+            trayIcon = new TrayIcon(image, "消息提醒系统", popupMenu);
             // 托盘图标自适应尺寸
             trayIcon.setImageAutoSize(true);
             trayIcon.addMouseListener(new MouseAdapter() {
@@ -66,5 +70,26 @@ public class MsgTrayIcon {
         } else {
             log.error("当前系统不支持托盘");
         }
+    }
+
+    public void startFlash() {
+        new Thread(() -> {
+            while (true){
+                trayIcon.setImage(new ImageIcon("").getImage());
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    trayIcon.setImage(ImageLoader.getImage("icon"));
+                    return;
+                }
+                trayIcon.setImage(ImageLoader.getImage("icon"));
+            }
+        }).start();
+
+    }
+
+    public static void main(String[] args) {
+        new MsgTrayIcon(new WindowManager()).startFlash();
     }
 }
