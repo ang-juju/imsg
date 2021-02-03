@@ -1,8 +1,10 @@
 package com.css.tzi.imsggui.websocket;
 
+import com.css.tzi.imsggui.config.AppCtxUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
+import org.springframework.beans.BeansException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -22,6 +24,7 @@ public final class MsgWebSocketClient extends WebSocketClient {
      */
     private static final int HEART_BEAT_PERIOD = 60000;
     private static final String HEART_BEAT_WORD = "HEART_BEAT";
+    private static WebSocketHandler webSocketHandler;
     /**
      * 心跳检测Timer
      */
@@ -42,8 +45,14 @@ public final class MsgWebSocketClient extends WebSocketClient {
      * @throws URISyntaxException uri语法错误
      */
     public static void connect(String serverUri) throws URISyntaxException {
+        log.debug("创建websocket客户端连接");
         if (webSocketClient == null) {
             webSocketClient = new MsgWebSocketClient(new URI(serverUri));
+            try {
+                webSocketHandler = AppCtxUtil.getBean(WebSocketHandler.class);
+            } catch (BeansException e) {
+                log.debug("未找到websocket客户端拓展实现");
+            }
             webSocketClient.connect();
         } else {
             destroy();
@@ -75,6 +84,9 @@ public final class MsgWebSocketClient extends WebSocketClient {
                 }
             }, HEART_BEAT_PERIOD, HEART_BEAT_PERIOD);
         }
+        if (webSocketHandler != null) {
+            webSocketHandler.onOpen(shake);
+        }
     }
 
     @Override
@@ -85,7 +97,9 @@ public final class MsgWebSocketClient extends WebSocketClient {
         if (HEART_BEAT_WORD.equals(paramString)) {
             return;
         }
-        OnMessageService.handle(paramString);
+        if (webSocketHandler != null) {
+            webSocketHandler.onMessage(paramString);
+        }
     }
 
     @Override
@@ -100,10 +114,16 @@ public final class MsgWebSocketClient extends WebSocketClient {
                 timer = null;
             }
         }
+        if (webSocketHandler != null) {
+            webSocketHandler.onClose(paramInt, paramString, paramBoolean);
+        }
     }
 
     @Override
     public void onError(Exception e) {
         log.error("websocket客户端异常" + e);
+        if (webSocketHandler != null) {
+            webSocketHandler.onError(e);
+        }
     }
 }

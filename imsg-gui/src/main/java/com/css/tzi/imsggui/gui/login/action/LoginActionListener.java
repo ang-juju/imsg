@@ -75,6 +75,7 @@ public class LoginActionListener implements ActionListener {
 
                 loginFrame.setVisible(false);
                 indexFrame.setVisible(true);
+                indexFrame.setRealName(userInfoEntity.getRealName());
                 windowManager.setActiveWindow(indexFrame);
             } else {
                 JOptionPane.showMessageDialog(null, resultEntity.getMsg(), "提醒", JOptionPane.ERROR_MESSAGE);

@@ -23,29 +23,34 @@ public final class IndexFrame extends JFrame {
     /**
      * 窗体宽度
      */
-    private static final int WINDOW_WIDTH = 600;
+    private static final int WINDOW_WIDTH = 300;
     /**
      * 窗体高度
      */
-    private static final int WINDOW_HEIGHT = 600;
+    private static final int WINDOW_HEIGHT = 300;
 
+    private final JLabel realNameLabel;
 
     public IndexFrame() {
-        setTitle("消息历史");
+        setTitle("消息中心");
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        setLayout(null);
 
-        JLabel welcomeLabel = new JLabel("您好");
-        welcomeLabel.setBounds(30, 5, 180, 30);
-        welcomeLabel.setBackground(Color.BLACK);
-        add(welcomeLabel);
+        JPanel northPanel = new JPanel();
+
+        JLabel welcomeLabel = new JLabel("您好：");
+        northPanel.add(welcomeLabel);
+
+        realNameLabel = new JLabel();
+        northPanel.add(realNameLabel);
+
+        add(BorderLayout.NORTH, northPanel);
 
         JButton logoutButton = new JButton("注销");
-        logoutButton.setBounds(530, 5, 60, 30);
         logoutButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        logoutButton.setBorder(null);
         logoutButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,7 +61,8 @@ public final class IndexFrame extends JFrame {
                 AppCtxUtil.getBean(WindowManager.class).setActiveWindow(loginFrame);
             }
         });
-        add(logoutButton);
+
+        add(BorderLayout.SOUTH, logoutButton);
 
         /*列表数据*/
         String[] tableHead = {"标题", "类型", "内容"};
@@ -71,11 +77,10 @@ public final class IndexFrame extends JFrame {
         //创建滚动panel容器
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jScrollPane.setBounds(10, 40, 580, 500);
-        add(jScrollPane);
+        add(BorderLayout.CENTER, jScrollPane);
     }
 
-    public static void main(String[] args) {
-        IndexFrame indexFrame = new IndexFrame();
-        indexFrame.setVisible(true);
+    public void setRealName(String realName) {
+        realNameLabel.setText(realName);
     }
 }
