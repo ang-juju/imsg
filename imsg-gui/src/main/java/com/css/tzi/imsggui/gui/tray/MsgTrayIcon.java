@@ -1,6 +1,5 @@
 package com.css.tzi.imsggui.gui.tray;
 
-import com.css.tzi.imsggui.gui.WindowManager;
 import com.css.tzi.imsggui.gui.util.ImageLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -11,7 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * 系统托盘
+ * 系统托盘封装类
  *
  * @author LiuTao
  * @date 2021/1/29
@@ -19,15 +18,36 @@ import java.awt.event.MouseEvent;
 @Slf4j
 @Component
 public class MsgTrayIcon {
-
-    private TrayIcon trayIcon;
-
     /**
-     * 构造系统托盘图标
-     *
-     * @param windowManager 窗体管理器
+     * 绑定的窗口
      */
-    public MsgTrayIcon(WindowManager windowManager) {
+    private Window bindWindow;
+    /**
+     * 托盘图标对象
+     */
+    private TrayIcon trayIcon;
+    /**
+     * 闪烁动画线程
+     */
+    private final Thread flashThread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    trayIcon.setImage(new ImageIcon("").getImage());
+                    Thread.sleep(500);
+                    trayIcon.setImage(ImageLoader.getImage("icon"));
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    trayIcon.setImage(ImageLoader.getImage("icon"));
+                    return;
+                }
+            }
+        }
+    });
+
+    public MsgTrayIcon() {
         if (SystemTray.isSupported()) {
             // 获取托盘图标图像
             Image image = ImageLoader.getImage("icon");
@@ -40,8 +60,9 @@ public class MsgTrayIcon {
             popupMenu.add(exitItem);
             // open事件监听
             openItem.addActionListener(e -> {
-                // 显示绑定的组件
-                windowManager.getActiveWindow().setVisible(true);
+                if (bindWindow != null) {
+                    bindWindow.setVisible(true);
+                }
             });
             // exit事件监听
             exitItem.addActionListener(e -> {
@@ -49,21 +70,23 @@ public class MsgTrayIcon {
                 System.exit(0);
             });
             // 创建系统托盘
-            trayIcon = new TrayIcon(image, "消息提醒系统", popupMenu);
+            this.trayIcon = new TrayIcon(image, "消息提醒系统", popupMenu);
             // 托盘图标自适应尺寸
-            trayIcon.setImageAutoSize(true);
-            trayIcon.addMouseListener(new MouseAdapter() {
+            this.trayIcon.setImageAutoSize(true);
+            this.trayIcon.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if (e.getClickCount() == 2) {
-                        windowManager.getActiveWindow().setVisible(true);
+                        if (bindWindow != null) {
+                            bindWindow.setVisible(true);
+                        }
                     }
                 }
             });
             //获取系统图盘
             SystemTray systemTray = SystemTray.getSystemTray();
             try {
-                systemTray.add(trayIcon);
+                systemTray.add(this.trayIcon);
             } catch (AWTException e) {
                 log.error("添加托盘图标失败", e);
             }
@@ -72,24 +95,16 @@ public class MsgTrayIcon {
         }
     }
 
+    public void bindWindow(Window window) {
+        this.bindWindow = window;
+    }
+
     public void startFlash() {
-        new Thread(() -> {
-            while (true){
-                trayIcon.setImage(new ImageIcon("").getImage());
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    trayIcon.setImage(ImageLoader.getImage("icon"));
-                    return;
-                }
-                trayIcon.setImage(ImageLoader.getImage("icon"));
-            }
-        }).start();
-
+        flashThread.start();
     }
 
-    public static void main(String[] args) {
-        new MsgTrayIcon(new WindowManager()).startFlash();
+    public void stopFlash() {
+        flashThread.interrupt();
     }
+
 }
