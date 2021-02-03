@@ -6,8 +6,8 @@
 
     <groupId>com.css.tzi</groupId>
     <artifactId>imsg</artifactId>
-    <packaging>pom</packaging>
     <version>1.0</version>
+    <packaging>pom</packaging>
 
     <modules>
         <module>imsg-gui</module>
