@@ -5,9 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.css.tzi.imsggui.config.SystemConfig;
 import com.css.tzi.imsggui.entity.ResultEntity;
 import com.css.tzi.imsggui.entity.UserInfoEntity;
-import com.css.tzi.imsggui.gui.WindowManager;
 import com.css.tzi.imsggui.gui.index.IndexFrame;
 import com.css.tzi.imsggui.gui.login.view.LoginFrame;
+import com.css.tzi.imsggui.gui.tray.MsgTrayIcon;
 import com.css.tzi.imsggui.websocket.MsgWebSocketClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class LoginActionListener implements ActionListener {
     @Autowired
     private final LoginFrame loginFrame;
     @Autowired
-    private WindowManager windowManager;
+    private MsgTrayIcon trayIcon;
     @Autowired
     private IndexFrame indexFrame;
     @Autowired
@@ -76,7 +76,7 @@ public class LoginActionListener implements ActionListener {
                 loginFrame.setVisible(false);
                 indexFrame.setVisible(true);
                 indexFrame.setRealName(userInfoEntity.getRealName());
-                windowManager.setActiveWindow(indexFrame);
+                trayIcon.bindWindow(indexFrame);
             } else {
                 JOptionPane.showMessageDialog(null, resultEntity.getMsg(), "提醒", JOptionPane.ERROR_MESSAGE);
             }

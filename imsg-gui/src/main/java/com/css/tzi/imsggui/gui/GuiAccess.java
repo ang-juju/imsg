@@ -2,8 +2,12 @@ package com.css.tzi.imsggui.gui;
 
 import com.css.tzi.imsggui.gui.login.view.LoginFrame;
 import com.css.tzi.imsggui.gui.tray.MsgTrayIcon;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import java.applet.Applet;
+import java.applet.AudioClip;
 
 /**
  * gui入口
@@ -17,20 +21,10 @@ public class GuiAccess {
     @Autowired
     private LoginFrame loginFrame;
     @Autowired
-    private WindowManager windowManager;
-
+    private MsgTrayIcon trayIcon;
 
     public void start() {
-        windowManager.setActiveWindow(loginFrame);
         loginFrame.setVisible(true);
+        trayIcon.bindWindow(loginFrame);
     }
-
-    public static void main(String[] args) throws InterruptedException {
-        MsgTrayIcon msgTrayIcon = new MsgTrayIcon();
-        msgTrayIcon.startFlash();
-        Thread.sleep(6000);
-        msgTrayIcon.stopFlash();
-        Thread.sleep(3000);
-    }
-
 }

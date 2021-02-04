@@ -24,11 +24,11 @@ public final class ImageLoader {
     /**
      * 图像存储器
      */
-    private static final Map<String, Image> imageMap;
+    private static final Map<String, Image> IMAGE_MAP;
 
     static {
         log.debug("开始加载图片资源");
-        imageMap = new HashMap<>();
+        IMAGE_MAP = new HashMap<>();
         try {
             Resource[] resources = new PathMatchingResourcePatternResolver()
                     .getResources(ResourceUtils.CLASSPATH_URL_PREFIX + "images/*");
@@ -39,7 +39,7 @@ public final class ImageLoader {
                     imageFileName = imageFileName.substring(0, imageFileName.lastIndexOf('.'));
                 }
                 try (InputStream inputStream = resource.getInputStream()) {
-                    imageMap.put(imageFileName, ImageIO.read(inputStream));
+                    IMAGE_MAP.put(imageFileName, ImageIO.read(inputStream));
                 }
             }
         } catch (IOException e) {
@@ -51,6 +51,6 @@ public final class ImageLoader {
     }
 
     public static Image getImage(String name) {
-        return imageMap.get(name);
+        return IMAGE_MAP.get(name);
     }
 }

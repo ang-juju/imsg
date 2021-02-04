@@ -35,7 +35,7 @@ public final class TipUtil {
         tipHeadPanel.getCloseLabel().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                tipDialog.disappear();
+                tipDialog.dispose();
             }
         });
         // 添加顶部panel到提示窗体
@@ -50,6 +50,6 @@ public final class TipUtil {
             tipBottomPanel.getViewButton().addMouseListener(new ClickToBrowseMouseListener(url));
             tipDialog.add(tipBottomPanel, BorderLayout.SOUTH);
         }
-        tipDialog.appear();
+        tipDialog.appearWhole();
     }
 }

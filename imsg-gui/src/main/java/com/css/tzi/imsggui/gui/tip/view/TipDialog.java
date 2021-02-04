@@ -66,6 +66,7 @@ public final class TipDialog extends JDialog {
      * 渐出
      */
     public void appear() {
+        log.debug("tipDialog渐出");
         setVisible(true);
         int appearY = hiddenY - getHeight() - 5;
         while (getY() > appearY) {
@@ -78,19 +79,13 @@ public final class TipDialog extends JDialog {
                 return;
             }
         }
-        try {
-            Thread.sleep(6000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            return;
-        }
-        disappear();
     }
 
     /**
      * 渐隐
      */
     public void disappear() {
+        log.debug("tipDialog渐入");
         while (getY() < hiddenY) {
             setLocation(hiddenX, getY() + 1);
             try {

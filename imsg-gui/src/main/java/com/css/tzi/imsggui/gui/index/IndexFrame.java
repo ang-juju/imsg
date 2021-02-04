@@ -1,8 +1,8 @@
 package com.css.tzi.imsggui.gui.index;
 
 import com.css.tzi.imsggui.config.AppCtxUtil;
-import com.css.tzi.imsggui.gui.WindowManager;
 import com.css.tzi.imsggui.gui.login.view.LoginFrame;
+import com.css.tzi.imsggui.gui.tray.MsgTrayIcon;
 import com.css.tzi.imsggui.websocket.MsgWebSocketClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -58,7 +58,7 @@ public final class IndexFrame extends JFrame {
                 setVisible(false);
                 LoginFrame loginFrame = AppCtxUtil.getBean(LoginFrame.class);
                 loginFrame.setVisible(true);
-                AppCtxUtil.getBean(WindowManager.class).setActiveWindow(loginFrame);
+                AppCtxUtil.getBean(MsgTrayIcon.class).bindWindow(loginFrame);
             }
         });
 
