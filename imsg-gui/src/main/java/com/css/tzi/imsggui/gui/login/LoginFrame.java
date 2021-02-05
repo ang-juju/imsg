@@ -1,11 +1,13 @@
-package com.css.tzi.imsggui.gui.login.view;
+package com.css.tzi.imsggui.gui.login;
 
 import com.css.tzi.imsggui.gui.util.ImageLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 登陆窗口
@@ -15,7 +17,7 @@ import java.util.HashMap;
  */
 @Slf4j
 @Component
-public class LoginFrame extends JFrame {
+public final class LoginFrame extends JFrame {
     // 用户名输入框
     private final JTextField usernameTextField;
     // 密码输入框
@@ -83,7 +85,7 @@ public class LoginFrame extends JFrame {
      *
      * @return 鉴权数据对象
      */
-    public Object getAuthData() {
+    public Map<String, String> getAuthData() {
         String userName = usernameTextField.getText();
         String password = new String(passwordField.getPassword());
         return new HashMap<String, String>() {{
@@ -92,13 +94,14 @@ public class LoginFrame extends JFrame {
         }};
     }
 
+
     /**
-     * 获取登陆按钮
+     * 绑定登陆按钮事件
      *
-     * @return 登陆按钮对象
+     * @param listener 监听器
      */
-    public JButton getLoginButton() {
-        return loginButton;
+    public void bindLoginButtonActionListener(ActionListener listener) {
+        loginButton.addActionListener(listener);
     }
 
 }

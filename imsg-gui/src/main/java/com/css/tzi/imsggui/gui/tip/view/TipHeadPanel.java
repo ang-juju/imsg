@@ -42,7 +42,7 @@ public class TipHeadPanel extends JPanel {
         closeLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                closeLabel.setBorder(BorderFactory.createLineBorder(Color.gray));
+                closeLabel.setBorder(BorderFactory.createLineBorder(Color.white));
             }
 
             @Override
@@ -52,6 +52,5 @@ public class TipHeadPanel extends JPanel {
         });
         add(titleLabel);
         add(closeLabel);
-
     }
 }

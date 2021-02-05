@@ -9,7 +9,7 @@ import java.awt.*;
  * @author LiuTao
  * @date 2021/1/27
  */
-public class TipFeaturePanel extends JPanel {
+public final class TipFeaturePanel extends JPanel {
 
     public TipFeaturePanel(String context) {
         super(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -24,9 +24,8 @@ public class TipFeaturePanel extends JPanel {
         feature.setBackground(Color.white);
         feature.setLineWrap(true);
 
-        jScrollPane.setPreferredSize(new Dimension(260, 100));
+        jScrollPane.setPreferredSize(new Dimension(280, 100));
         jScrollPane.setBorder(null);
-        jScrollPane.setBackground(Color.black);
 
         JLabel jsp = new JLabel();
         jsp.setPreferredSize(new Dimension(300, 15));

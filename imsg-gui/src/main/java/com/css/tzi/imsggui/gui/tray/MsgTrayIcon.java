@@ -17,7 +17,7 @@ import java.awt.event.MouseEvent;
  */
 @Slf4j
 @Component
-public class MsgTrayIcon extends TrayIcon implements Runnable {
+public final class MsgTrayIcon extends TrayIcon implements Runnable {
     /**
      * 闪烁动画线程
      */
@@ -39,11 +39,9 @@ public class MsgTrayIcon extends TrayIcon implements Runnable {
             @Override
             public void mouseClicked(MouseEvent e) {
                 /* 双击事件 */
-                if (e.getClickCount() == 2) {
-                    if (bindWindow != null) {
-                        // 显示绑定的窗口
-                        bindWindow.setVisible(true);
-                    }
+                if (e.getClickCount() == MouseEvent.BUTTON2 && bindWindow != null) {
+                    // 显示绑定的窗口
+                    bindWindow.setVisible(true);
                 }
             }
         });
@@ -62,10 +60,10 @@ public class MsgTrayIcon extends TrayIcon implements Runnable {
             }
         });
         /* exit事件监听 */
-        exitItem.addActionListener(e -> {
-            // 程序退出
-            System.exit(0);
-        });
+        exitItem.addActionListener(e ->
+                // 程序退出
+                System.exit(0)
+        );
         /* 托盘图标添加到系统托盘中 */
         if (SystemTray.isSupported()) {
             //获取系统图盘
@@ -85,13 +83,16 @@ public class MsgTrayIcon extends TrayIcon implements Runnable {
     }
 
     public void startFlash() {
-        flashThread = new Thread(this);
-        flashThread.start();
+        if (flashThread == null) {
+            flashThread = new Thread(this);
+            flashThread.start();
+        }
     }
 
     public void stopFlash() {
         if (flashThread != null) {
             flashThread.interrupt();
+            flashThread = null;
         }
     }
 
@@ -106,10 +107,10 @@ public class MsgTrayIcon extends TrayIcon implements Runnable {
                 setImage(ImageLoader.getImage("icon"));
                 Thread.sleep(500);
             } catch (InterruptedException e) {
+                log.debug("托盘闪烁停止");
                 Thread.currentThread().interrupt();
                 setImage(ImageLoader.getImage("icon"));
-                log.debug("托盘闪烁停止");
-                return;
+                break;
             }
         }
     }

@@ -19,7 +19,7 @@ import java.util.Map;
  * @date 2021/2/3
  */
 @Slf4j
-public class AudioLoader {
+public final class AudioLoader {
     private static final Map<String, AudioClip> AUDIO_CLIP_MAP;
 
     static {

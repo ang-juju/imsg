@@ -14,18 +14,18 @@ import java.awt.*;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class TipBottomPanel extends JPanel {
+public final class TipBottomPanel extends JPanel {
     private JButton viewButton;
 
     public TipBottomPanel() {
         super(new FlowLayout(FlowLayout.CENTER, 0, 0));
         viewButton = new JButton("查看");
         viewButton.setHorizontalAlignment(SwingConstants.CENTER);
-        viewButton.setPreferredSize(new Dimension(60, 30));
+        viewButton.setPreferredSize(new Dimension(40, 30));
         viewButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         viewButton.setContentAreaFilled(false);
         viewButton.setBorder(BorderFactory.createRaisedBevelBorder());
-        viewButton.setBackground(Color.gray);
+        viewButton.setBackground(Color.white);
         setBackground(Color.white);
         add(viewButton);
     }

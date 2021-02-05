@@ -15,7 +15,7 @@ import java.util.UUID;
 public class AuthServiceImpl implements AuthService {
     @Override
     public UserInfo doAuth() {
-        UserInfo  userInfo= new UserInfo();
+        UserInfo userInfo = new UserInfo();
         userInfo.setId(UUID.randomUUID().toString());
         userInfo.setRealName("测试");
         return userInfo;
@@ -23,6 +23,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Boolean logout() {
-        return null;
+        return true;
     }
 }

@@ -45,7 +45,7 @@ public final class TipDialog extends JDialog {
         getRootPane().setBorder(
                 BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white));
         // 设置背板颜色
-        setBackground(Color.yellow);
+        setBackground(Color.white);
         // 设置高层显示
         setAlwaysOnTop(true);
         // 设置固定窗体大小

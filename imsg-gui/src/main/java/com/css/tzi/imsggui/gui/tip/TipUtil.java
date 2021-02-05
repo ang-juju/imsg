@@ -1,16 +1,22 @@
 package com.css.tzi.imsggui.gui.tip;
 
+import com.css.tzi.imsggui.config.AppCtxUtil;
 import com.css.tzi.imsggui.gui.tip.action.ClickToBrowseMouseListener;
 import com.css.tzi.imsggui.gui.tip.view.TipBottomPanel;
 import com.css.tzi.imsggui.gui.tip.view.TipDialog;
 import com.css.tzi.imsggui.gui.tip.view.TipFeaturePanel;
 import com.css.tzi.imsggui.gui.tip.view.TipHeadPanel;
+import com.css.tzi.imsggui.gui.tray.MsgTrayIcon;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 提示框工具
@@ -20,6 +26,8 @@ import java.awt.event.MouseEvent;
  */
 @Slf4j
 public final class TipUtil {
+    private static final AtomicInteger TIP_COUNT = new AtomicInteger(0);
+
     /**
      * 私有化构造器
      */
@@ -50,6 +58,19 @@ public final class TipUtil {
             tipBottomPanel.getViewButton().addMouseListener(new ClickToBrowseMouseListener(url));
             tipDialog.add(tipBottomPanel, BorderLayout.SOUTH);
         }
+        tipDialog.addWindowListener(new WindowAdapter() {
+            @SneakyThrows
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if (0 == TIP_COUNT.decrementAndGet()) {
+                    MsgTrayIcon bean = AppCtxUtil.getBean(MsgTrayIcon.class);
+                    bean.stopFlash();
+                }
+            }
+        });
         tipDialog.appearWhole();
+        TIP_COUNT.incrementAndGet();
+        MsgTrayIcon bean = AppCtxUtil.getBean(MsgTrayIcon.class);
+        bean.startFlash();
     }
 }
