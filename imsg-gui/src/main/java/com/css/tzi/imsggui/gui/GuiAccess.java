@@ -1,6 +1,5 @@
 package com.css.tzi.imsggui.gui;
 
-import com.css.tzi.imsggui.gui.index.IndexFrame;
 import com.css.tzi.imsggui.gui.login.LoginFrame;
 import com.css.tzi.imsggui.gui.tray.MsgTrayIcon;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +20,6 @@ public class GuiAccess {
     private LoginFrame loginFrame;
     @Autowired
     private MsgTrayIcon trayIcon;
-
-    public static void main(String[] args) {
-        IndexFrame indexFrame = new IndexFrame();
-        indexFrame.setVisible(true);
-        indexFrame.setStatus("123");
-    }
 
     public void start() {
         loginFrame.setVisible(true);

@@ -1,9 +1,11 @@
 package com.css.tzi.imsggui.gui.index;
 
+import com.css.tzi.imsggui.gui.util.ImageLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -33,6 +35,10 @@ public final class IndexFrame extends JFrame {
      */
     private final JLabel statusLabel;
     /**
+     * table数据模型
+     */
+    private final DefaultTableModel tableModel;
+    /**
      * 登出button
      */
     private final JButton logoutButton;
@@ -44,6 +50,7 @@ public final class IndexFrame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        setIconImage(ImageLoader.getImage("icon"));
 
         /* 北部面板 */
         JPanel northPanel = new JPanel();
@@ -66,6 +73,10 @@ public final class IndexFrame extends JFrame {
         /* 中部内容面板 */
 
         JTable jTable = new JTable();
+        jTable.setEnabled(false);
+        tableModel = (DefaultTableModel) jTable.getModel();
+        tableModel.addColumn("标题");
+        tableModel.addColumn("内容");
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jScrollPane.setBackground(Color.white);
         add(BorderLayout.CENTER, jScrollPane);
@@ -98,5 +109,9 @@ public final class IndexFrame extends JFrame {
 
     public void setStatus(String status) {
         statusLabel.setText(status);
+    }
+
+    public DefaultTableModel getTableModel() {
+        return tableModel;
     }
 }

@@ -34,6 +34,7 @@ public class WebSocketHandlerImpl implements WebSocketHandler {
         TipUtil.show(msgEntity.getTitle(), msgEntity.getContent(), msgEntity.getUrl());
         trayIcon.startFlash();
         AudioLoader.play("tip");
+        indexFrame.getTableModel().addRow(new Object[]{msgEntity.getTitle(), msgEntity.getContent()});
     }
 
     @Override
