@@ -1,4 +1,4 @@
-package com.css.tzu.imsgserver.common.exception;
+package com.css.tzi.imsgserver.common.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

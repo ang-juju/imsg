@@ -12,6 +12,7 @@
     <modules>
         <module>imsg-gui</module>
         <module>imsg-server</module>
+        <module>imsg-common</module>
     </modules>
 
 </project>

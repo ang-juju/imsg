@@ -1,4 +1,4 @@
-package com.css.tzu.imsgserver.websocket;
+package com.css.tzi.imsgserver.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

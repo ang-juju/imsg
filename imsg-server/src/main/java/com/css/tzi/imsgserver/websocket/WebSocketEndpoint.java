@@ -1,4 +1,4 @@
-package com.css.tzu.imsgserver.websocket;
+package com.css.tzi.imsgserver.websocket;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-
 
 /**
  * WebSocket服务端

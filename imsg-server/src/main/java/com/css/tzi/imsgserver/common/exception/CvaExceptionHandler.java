@@ -1,6 +1,6 @@
-package com.css.tzu.imsgserver.common.exception;
+package com.css.tzi.imsgserver.common.exception;
 
-import com.css.tzu.imsgserver.common.Result;
+import com.css.tzi.imsgserver.common.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

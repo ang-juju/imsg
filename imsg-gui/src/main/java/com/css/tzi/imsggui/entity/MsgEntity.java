@@ -12,5 +12,5 @@ import lombok.Data;
 public class MsgEntity {
     private String title;
     private String content;
-    private String url;
+    private String toUrl;
 }

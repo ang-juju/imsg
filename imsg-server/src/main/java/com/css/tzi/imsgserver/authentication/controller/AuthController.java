@@ -1,7 +1,8 @@
-package com.css.tzu.imsgserver.authentication;
+package com.css.tzi.imsgserver.authentication.controller;
 
-import com.css.tzu.imsgserver.common.Result;
-import com.css.tzu.imsgserver.common.UserInfo;
+import com.css.tzi.imsgserver.authentication.entity.UserInfo;
+import com.css.tzi.imsgserver.common.Result;
+import com.css.tzi.imsgserver.authentication.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

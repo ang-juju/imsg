@@ -1,4 +1,4 @@
-package com.css.tzu.imsgserver.common;
+package com.css.tzi.imsgserver.authentication.entity;
 
 import lombok.Data;
 

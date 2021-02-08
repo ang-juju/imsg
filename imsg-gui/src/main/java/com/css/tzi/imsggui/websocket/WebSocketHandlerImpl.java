@@ -31,7 +31,7 @@ public class WebSocketHandlerImpl implements WebSocketHandler {
     @Override
     public void onMessage(WebSocketClient webSocketClient, String paramString) {
         MsgEntity msgEntity = JSON.parseObject(paramString, MsgEntity.class);
-        TipUtil.show(msgEntity.getTitle(), msgEntity.getContent(), msgEntity.getUrl());
+        TipUtil.show(msgEntity.getTitle(), msgEntity.getContent(), msgEntity.getToUrl());
         trayIcon.startFlash();
         AudioLoader.play("tip");
         indexFrame.getTableModel().addRow(new Object[]{msgEntity.getTitle(), msgEntity.getContent()});

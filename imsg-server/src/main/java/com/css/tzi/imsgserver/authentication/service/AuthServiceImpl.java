@@ -1,6 +1,6 @@
-package com.css.tzu.imsgserver.authentication;
+package com.css.tzi.imsgserver.authentication.service;
 
-import com.css.tzu.imsgserver.common.UserInfo;
+import com.css.tzi.imsgserver.authentication.entity.UserInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -17,12 +17,11 @@ public class AuthServiceImpl implements AuthService {
     public UserInfo doAuth() {
         UserInfo userInfo = new UserInfo();
         userInfo.setId(UUID.randomUUID().toString());
-        userInfo.setRealName("测试");
+        userInfo.setRealName("卢本伟");
         return userInfo;
     }
 
     @Override
-    public Boolean logout() {
-        return true;
+    public void logout() {
     }
 }
